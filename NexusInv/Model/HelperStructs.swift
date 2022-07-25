@@ -17,6 +17,7 @@ struct Inv: Identifiable {
     var supplier : String
     var recQuantity: Int
     var boxQuantity: Int
+    var costPrice: Int
 }
 
 struct Iden: Identifiable {

@@ -22,6 +22,8 @@ struct ItemOptionsView: View {
     @State var recQuantity = ""
     @State var editQuantity = ""
     @State var boxQuantity = ""
+    @State var costPrice = ""
+    @State var placeHolder = ""
     
     @State var editDisabled = true
     @State var showEditBtn = true
@@ -71,7 +73,7 @@ struct ItemOptionsView: View {
                             // dropdown meny for suppliers
                             if editDisabled {
                                 HStack {
-                                    Text("חברה")
+                                    Text("חברה (יצרן)")
                                     Spacer()
                                     Text(String(model.brand))
                                         .foregroundColor(Color(UIColor.systemGray4))
@@ -79,7 +81,7 @@ struct ItemOptionsView: View {
                             }
                             else {
                                 // important: poopulate the brand variable wth model.brand to show on the picker
-                                Picker(selection: $brand, label: Text("חברה")) {
+                                Picker(selection: $brand, label: Text("חברה (יצרן)")) {
                                     ForEach(model.brandsList) { brand in
                                         Text(brand.name)
                                     }
@@ -130,12 +132,41 @@ struct ItemOptionsView: View {
                             HStack {
                                 Text("כמות במלאי")
                                 TextField(String(model.stock), text: $quantity)
+                                    .keyboardType(.numberPad)
                                     .foregroundColor(Color.gray)
                                     .disabled(editDisabled)
                                     .multilineTextAlignment(TextAlignment.trailing)
                                 
                                 if !editDisabled {
                                     Image(systemName: "arrow.right")
+                                }
+                            }
+                            
+                            HStack {
+                                Text("מחיר קניה ליחידה")
+                                TextField(String(model.costPrice) + " ₪", text: $costPrice)
+                                    .keyboardType(.numberPad)
+                                    .foregroundColor(Color.gray)
+                                    .disabled(editDisabled)
+                                    .multilineTextAlignment(TextAlignment.trailing)
+                                
+                                if !editDisabled {
+                                    Image(systemName: "arrow.right")
+                                }
+                            }
+                            
+                            if editDisabled {
+                                HStack {
+                                    Text("סה״כ במלאי")
+                                    TextField(String(model.costPrice * model.stock) + " ₪", text: $placeHolder)
+                                        .keyboardType(.numberPad)
+                                        .foregroundColor(Color.gray)
+                                        .disabled(true)
+                                        .multilineTextAlignment(TextAlignment.trailing)
+                                    
+                                    if !editDisabled {
+                                        Image(systemName: "arrow.right")
+                                    }
                                 }
                             }
                             
@@ -176,7 +207,8 @@ struct ItemOptionsView: View {
                                                               supplier: supplier.isEmpty ? model.supplier : supplier,
                                                               quantity: (quantity.isEmpty ? model.stock : Int(quantity)) ?? model.stock,
                                                               recQuantity: (recQuantity.isEmpty ? model.recQuantity : Int(recQuantity)) ?? model.recQuantity,
-                                                              boxQuantity: Int(boxQuantity) ?? model.boxQuantity)
+                                                              boxQuantity: Int(boxQuantity) ?? model.boxQuantity,
+                                                              costPrice: (costPrice.isEmpty ? model.costPrice : Int(costPrice)) ?? model.costPrice)
                                         editDisabled = true
                                     }) {
                                         Image(systemName: "checkmark")

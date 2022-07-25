@@ -21,7 +21,7 @@ struct ItemsListView: View {
                 
                 else {
                     NavigationLink(destination: ItemOptionsView(showOptions: $model.showItemOptions, changeSettings: $changeSettings).environmentObject(model), isActive: $model.showItemOptions) { EmptyView() }
-                    
+                    Text("סה״כ במלאי: " + String(model.inventoryTotalAmount) + " ₪ ")
                     Form {
                         Section(header: Text("בחר פריט")) {
                             List(model.list) { item in

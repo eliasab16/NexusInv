@@ -42,7 +42,9 @@ class ViewModel: ObservableObject {
     @Published var supplier = ""
     @Published var recQuantity = 0
     @Published var boxQuantity = 1
+    @Published var costPrice = 0
     
+    @Published var inventoryTotalAmount = 0
     // log in properties
     @Published var loginError = false
     @Published var signedIn = false
@@ -55,18 +57,19 @@ class ViewModel: ObservableObject {
     // fetch all data function
     func getData() {
         self.showLoadingItemOptions = true
+        inventoryTotalAmount = 0
         // Get a reference to the database
         let db = Firestore.firestore()
         // Read the docu,emt at a specific path
         db.collection("Inventory").getDocuments { list, error in
             // check for errors
-            print("here")
             if error == nil {
                 if let list = list {
                     
                     DispatchQueue.main.async {
                         // Get all the documents and create Inv structs
                         self.list = list.documents.map { doc in
+                            self.inventoryTotalAmount += (doc["costPrice"] as? Int ?? 0) * (doc["stock"] as? Int ?? 0)
                             // return an Inv struct. The attributes of the documents are accessed as key,items in a dictionary
                             return Inv(id: doc.documentID,
                                        brand: doc["brand"] as? String ?? "",
@@ -75,7 +78,8 @@ class ViewModel: ObservableObject {
                                        nickname: doc["nickname"] as? String ?? "",
                                        supplier: doc["supplier"] as? String ?? "",
                                        recQuantity: doc["recQuantity"] as? Int ?? 0,
-                                       boxQuantity: doc["boxQuantity"] as? Int ?? 0)
+                                       boxQuantity: doc["boxQuantity"] as? Int ?? 0,
+                                       costPrice: doc["costPrice"] as? Int ?? 0)
                         }
                         
                         self.showLoadingItemOptions = false
@@ -113,6 +117,7 @@ class ViewModel: ObservableObject {
                     self.supplier = doc["supplier"] as? String ?? ""
                     self.recQuantity = doc["recQuantity"] as? Int ?? 0
                     self.boxQuantity = doc["boxQuantity"] as? Int ?? 0
+                    self.costPrice = doc["costPrice"] as? Int ?? 0
                     
                     // print info on screen
                     self.itemFoundForDisplay = true
@@ -156,6 +161,7 @@ class ViewModel: ObservableObject {
                     self.supplier = doc["supplier"] as? String ?? ""
                     self.recQuantity = doc["recQuantity"] as? Int ?? 0
                     self.boxQuantity = doc["boxQuantity"] as? Int ?? 0
+                    self.costPrice = doc["costPrice"] as? Int ?? 0
                     
                     // if status == 1 then functions was called from inventory list (to make changes)
                     if status == 1 {
@@ -199,7 +205,7 @@ class ViewModel: ObservableObject {
     
     
     // update item information - not including quantity
-    func updateData(id: String, brand: String, type: String, nickname: String, supplier: String, quantity: Int, recQuantity: Int, boxQuantity: Int) {
+    func updateData(id: String, brand: String, type: String, nickname: String, supplier: String, quantity: Int, recQuantity: Int, boxQuantity: Int, costPrice: Int) {
         // Get a reference to the database
         let db = Firestore.firestore()
         
@@ -210,7 +216,8 @@ class ViewModel: ObservableObject {
                                                             "supplier": supplier,
                                                             "quantity": quantity,
                                                             "recQuantity": recQuantity,
-                                                            "boxQuantity": boxQuantity])
+                                                            "boxQuantity": boxQuantity,
+                                                            "costPrice": costPrice])
         
         // call get the data to get the updated list and properties
         self.fetchItem(barcode: id, status: 0)
@@ -219,7 +226,7 @@ class ViewModel: ObservableObject {
     
     
     // Add item to inventory
-    func addData(id: String, brand: String, type: String, stock: Int, nickname : String, supplier: String, recQuantity: Int, boxQuantity: Int) {
+    func addData(id: String, brand: String, type: String, stock: Int, nickname : String, supplier: String, recQuantity: Int, boxQuantity: Int, costPrice: Int) {
         // Get a reference to the database
         let db = Firestore.firestore()
         // Add a document to a collection, using the barcode serial number as its unique ID
@@ -229,7 +236,8 @@ class ViewModel: ObservableObject {
                                                          "nickname": nickname.isEmpty ? (brand + type) : nickname,
                                                          "supplier": supplier,
                                                          "recQuantity": recQuantity,
-                                                         "boxQuantity": boxQuantity]) {error in
+                                                         "boxQuantity": boxQuantity,
+                                                         "costPrice": costPrice]) {error in
             // Check for errors
             if error == nil {
                 self.getData()

@@ -22,6 +22,7 @@ struct RegisterView: View {
     @State var nickname = ""
     @State var supplier = ""
     @State var boxQuantity = ""
+    @State var costPrice = ""
     
     @State var editDisable = true
     
@@ -36,7 +37,7 @@ struct RegisterView: View {
                 // item details
                 Section(header: Text("הקלד פרטים")) {
                     // dropdown meny for brands
-                    Picker(selection: $brand, label: Text("חברה")) {
+                    Picker(selection: $brand, label: Text("חברה (יצרן)")) {
                         ForEach(model.brandsList) { brand in
                             Text(brand.name)
                         }
@@ -64,14 +65,21 @@ struct RegisterView: View {
                     HStack {
                         Text("כמות באריזה")
                         TextField("כמה יחידות מגיע באריזה", text: $boxQuantity)
-                            .keyboardType(.decimalPad)
+                            .keyboardType(.numberPad)
                             .multilineTextAlignment(TextAlignment.trailing)
                     }
                     
                     HStack {
                         Text("כמות במלאי")
                         TextField("כמות במלאי", text: $stock)
-                            .keyboardType(.decimalPad)
+                            .keyboardType(.numberPad)
+                            .multilineTextAlignment(TextAlignment.trailing)
+                    }
+                    
+                    HStack {
+                        Text("מחיר קנייה ליחידה")
+                        TextField("מחיר ₪", text: $costPrice)
+                            .keyboardType(.numberPad)
                             .multilineTextAlignment(TextAlignment.trailing)
                     }
                     
@@ -88,7 +96,7 @@ struct RegisterView: View {
                     Button(action: {
                         
                         // Call add data
-                        model.addData(id: model.barcodeValue, brand: brand, type: type, stock: Int(stock) ?? 0, nickname: nickname, supplier: supplier, recQuantity: Int(recQuantity) ?? 0, boxQuantity: Int(boxQuantity) ?? 1)
+                        model.addData(id: model.barcodeValue, brand: brand, type: type, stock: Int(stock) ?? 0, nickname: nickname, supplier: supplier, recQuantity: Int(recQuantity) ?? 0, boxQuantity: Int(boxQuantity) ?? 1, costPrice: Int(costPrice) ?? 0)
                         
                         // Clear the text fields
                         brand = ""
@@ -98,6 +106,7 @@ struct RegisterView: View {
                         supplier = ""
                         recQuantity = ""
                         boxQuantity = ""
+                        costPrice = ""
                         
                         // close down window - return to Scanner View
                         showReg = false
