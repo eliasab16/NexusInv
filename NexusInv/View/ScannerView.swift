@@ -160,24 +160,25 @@ struct ScannerView: View {
                     
                     // Scanner parameters
                     CBScanner(
-                        supportBarcode: .constant([.code128, .code39, .upce, .ean13, .qr]),
+                        supportBarcode: .constant([.code128, .code39, .upce, .ean13]),
                         torchLightIsOn: $torchIsOn,
                         scanInterval: .constant(1.0),
                         cameraPosition: $cameraPosition,
                         mockBarCode: .constant(BarcodeData(value:"My Test Data", type: .qr))
                     ){
                         barcodeValue = $0.value
+                        print("VALUE: " + barcodeValue)
                         // fetch items to display before pressing any buttons
                         model.fetchItemForDisplay(barcode: barcodeValue)
                         enableButton = true
                         // stop alert after 1 second
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                            self.enableButton = false
-                        }
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+//                            self.enableButton = false
+//                        }
                     }
                 onDraw: {
-                    print("Preview View Size = \($0.cameraPreviewView.bounds)")
-                    print("Barcode Corners = \($0.corners)")
+//                    print("Preview View Size = \($0.cameraPreviewView.bounds)")
+//                    print("Barcode Corners = \($0.corners)")
                     
                     let lineColor = UIColor.green
                     let fillColor = UIColor(red: 0, green: 1, blue: 0.2, alpha: 0.4)
@@ -279,10 +280,13 @@ struct ScannerView: View {
                     // scan button
                     VStack {
                         Button {
+                            print(enableButton)
                             if enableButton {
+                                print("here")
                                 // play sound
                                 AudioServicesPlaySystemSound(1256)
                                 // try to fetch the item using the barcode, this function determins which View to open next: RegisterView or ItemOptionsView
+                                // refer to fetchItem function code in viewModel for more conditionals
                                 model.fetchItem(barcode: String(barcodeValue), status: 0)
                                 
                                 // turn off flashlight after scanning, before moving to a new view
