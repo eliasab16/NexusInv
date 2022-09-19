@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		29002AFBAFD6ECFC6DEDB58E /* Pods_NexusInv.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7215097BE3A08F645E581238 /* Pods_NexusInv.framework */; };
 		42B041AA2881738000A5863B /* NexusInvApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B041A92881738000A5863B /* NexusInvApp.swift */; };
 		42B041AC2881738000A5863B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B041AB2881738000A5863B /* ContentView.swift */; };
 		42B041AE2881738200A5863B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42B041AD2881738200A5863B /* Assets.xcassets */; };
@@ -64,6 +65,9 @@
 		42B041E728819F8E00A5863B /* Divider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Divider.swift; sourceTree = "<group>"; };
 		42B041E928819FB400A5863B /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		42B4C4F82881A7D80042FB1E /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		61C33DDDEF9499316DFCB261 /* Pods-NexusInv.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NexusInv.debug.xcconfig"; path = "Target Support Files/Pods-NexusInv/Pods-NexusInv.debug.xcconfig"; sourceTree = "<group>"; };
+		7215097BE3A08F645E581238 /* Pods_NexusInv.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NexusInv.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E95589CC04C11B12DFB4EB01 /* Pods-NexusInv.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NexusInv.release.xcconfig"; path = "Target Support Files/Pods-NexusInv/Pods-NexusInv.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +81,7 @@
 				42B041C1288177AF00A5863B /* FirebaseFirestore in Frameworks */,
 				42B041BB288177AF00A5863B /* FirebaseAnalytics in Frameworks */,
 				42B041BD288177AF00A5863B /* FirebaseAuth in Frameworks */,
+				29002AFBAFD6ECFC6DEDB58E /* Pods_NexusInv.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,6 +94,7 @@
 				42B041A82881738000A5863B /* NexusInv */,
 				42B041A72881738000A5863B /* Products */,
 				42B4C4F72881A7D80042FB1E /* Frameworks */,
+				979725E0048B863F3D618FDA /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -166,8 +172,18 @@
 			isa = PBXGroup;
 			children = (
 				42B4C4F82881A7D80042FB1E /* XCTest.framework */,
+				7215097BE3A08F645E581238 /* Pods_NexusInv.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		979725E0048B863F3D618FDA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				61C33DDDEF9499316DFCB261 /* Pods-NexusInv.debug.xcconfig */,
+				E95589CC04C11B12DFB4EB01 /* Pods-NexusInv.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,9 +193,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 42B041B42881738200A5863B /* Build configuration list for PBXNativeTarget "NexusInv" */;
 			buildPhases = (
+				5F7C1CAF7AE9A18DDF4BD7D2 /* [CP] Check Pods Manifest.lock */,
 				42B041A22881738000A5863B /* Sources */,
 				42B041A32881738000A5863B /* Frameworks */,
 				42B041A42881738000A5863B /* Resources */,
+				868745F40DD45527D38DE536 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -246,6 +264,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5F7C1CAF7AE9A18DDF4BD7D2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NexusInv-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		868745F40DD45527D38DE536 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NexusInv/Pods-NexusInv-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NexusInv/Pods-NexusInv-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NexusInv/Pods-NexusInv-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		42B041A22881738000A5863B /* Sources */ = {
@@ -328,7 +388,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -382,7 +442,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -394,6 +454,7 @@
 		};
 		42B041B52881738200A5863B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 61C33DDDEF9499316DFCB261 /* Pods-NexusInv.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -428,6 +489,7 @@
 		};
 		42B041B62881738200A5863B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E95589CC04C11B12DFB4EB01 /* Pods-NexusInv.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

@@ -27,6 +27,10 @@ struct ItemsListView: View {
                             List(model.list) { item in
                                 HStack {
                                     HStack {
+                                        if (item.costPrice == 0) {
+                                            Image(systemName: "xmark.octagon")
+                                                .foregroundColor(.red)
+                                        }
                                         Text(item.nickname)
                                     }
                                     Spacer()
